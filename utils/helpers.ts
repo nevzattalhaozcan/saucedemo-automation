@@ -3,11 +3,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export function readCSVFile(filePath: string) {
-  const absolutePath = path.resolve(__dirname, filePath); // Resolve the absolute path
+  const absolutePath = path.isAbsolute(filePath)
+    ? filePath
+    : path.resolve(process.cwd(), filePath); // Use process.cwd() for CI compatibility
   const fileContent = fs.readFileSync(absolutePath);
   return parse(fileContent, {
-    columns: true,          // treat first row as column headers
-    skip_empty_lines: true, // ignore empty lines
-    trim: true              // remove spaces
+    columns: true,
+    skip_empty_lines: true,
+    trim: true
   });
 }
