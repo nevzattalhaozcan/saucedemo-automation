@@ -37,11 +37,37 @@ export class ProductsPage {
     return String(await this.getInventoryItem(productName).getName());
   }
 
+  async getProductDescription(productName: string) {
+    return String(await this.getInventoryItem(productName).getDescription());
+  }
+
   async gotoCart() {
     await this.cartButton.click();
   }
 
   async getCartItemCount() {
     return await this.cartItemCount.textContent();
+  }
+
+  async getAllProducts() {
+    const productElements = this.page.locator('[data-test="inventory-item"]');
+    const products: InventoryItem[] = [];
+
+    for (let i = 0; i < await productElements.count(); i++) {
+      const itemRoot = productElements.nth(i);
+      const item = new InventoryItem(itemRoot);
+      products.push(item);
+    }
+    return products;
+  }
+
+  async sortBy(sortType: string) {
+    const sortDropdown = this.page.getByTestId('product-sort-container');
+    await sortDropdown.selectOption(sortType);
+  }
+
+  async gotoProductDetails(productName: string) {
+    const product = this.getInventoryItem(productName);
+    await product.clickTitle();
   }
 }

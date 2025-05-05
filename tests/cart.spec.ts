@@ -30,7 +30,7 @@ test.describe('Cart Tests', () => {
     const productPrice = await productsPage.getProductPrice(product) || '0.00';
     await productsPage.gotoCart();
     const cartItemName = await cartPage.getCartItemName(productName);
-    const cartItemPrice = await cartPage.getCartItemPrice(productPrice);
+    const cartItemPrice = await cartPage.getCartItemPrice(productName);
     const cartItemQuantity = await cartPage.getCartItemQuantity(productName);
 
     expect(cartItemName).toBe(productName);
@@ -50,7 +50,7 @@ test.describe('Cart Tests', () => {
     await productsPage.gotoCart();
     for (const item of expectedItems) {
       const cartItemName = await cartPage.getCartItemName(item.name);
-      const cartItemPrice = await cartPage.getCartItemPrice(item.price);
+      const cartItemPrice = await cartPage.getCartItemPrice(item.name);
       const cartItemQuantity = await cartPage.getCartItemQuantity(item.name);
 
       expect(cartItemName).toBe(item.name);

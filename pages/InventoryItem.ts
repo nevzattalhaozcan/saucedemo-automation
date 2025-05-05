@@ -16,10 +16,18 @@ export class InventoryItem {
   }
 
   async getPrice() {
-    return await this.root.getByTestId('inventory-item-price').textContent();
+    return (await this.root.getByTestId('inventory-item-price').textContent())?.substring(1);
   }
 
   async getName() {
     return (await this.root.getByTestId('inventory-item-name').textContent())?.trim();
+  }
+
+  async getDescription() {
+    return (await this.root.getByTestId('inventory-item-desc').textContent())?.trim();
+  }
+
+  async clickTitle() {
+    await this.root.getByTestId(/item-\d+-title-link/).click();
   }
 }

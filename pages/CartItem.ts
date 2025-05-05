@@ -12,7 +12,7 @@ export class CartItem {
   }
 
   async getPrice() {
-    return await this.root.getByTestId('inventory-item-price').textContent();
+    return (await this.root.getByTestId('inventory-item-price').textContent())?.substring(1);
   }
 
   async getName() {

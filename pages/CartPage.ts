@@ -17,7 +17,11 @@ export class CartPage {
   }
 
   private getCartItem(productName: string): CartItem {
-    const itemRoot = this.page.locator('[data-test="inventory-item"]', { hasText: productName });
+    const itemRoot = this.page.locator('[data-test="inventory-item"]').filter({
+      has: this.page.getByTestId('inventory-item-name').filter({ hasText: new RegExp(`^${productName}$`, 'i') })
+    });
+    // Optionally, assert only one match
+    // await expect(itemRoot).toHaveCount(1);
     return new CartItem(itemRoot);
   }
 
