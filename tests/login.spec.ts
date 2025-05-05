@@ -1,6 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from '../pages/LoginPage.ts';
-import usersJson from '../data/users.json' assert { type: 'json' };
+//import usersJson from '../data/users.json' assert { type: 'json' };
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from "url";
 import { readCSVFile } from '../utils/helpers';
 import * as dotenv from 'dotenv';
 
@@ -9,6 +12,10 @@ dotenv.config();
 const username = String(process.env.USERNAME);
 const password = String(process.env.PASSWORD);
 const usersCsv = readCSVFile('./data/users.csv');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const usersJsonPath = path.resolve(__dirname, '../data/users.json');
+const usersJson = JSON.parse(fs.readFileSync(usersJsonPath, 'utf-8'));
 
 test.describe('Login Tests', () => {
 
@@ -76,7 +83,7 @@ test.describe('data driven login tests', () => {
   
   for (const user of usersJson) {
 
-    test.skip(`from json - login test ${usersJson.indexOf(user)+1} for: ${user.username || user.result}`, async ({ page }, testInfo) => {
+    test(`from json - login test ${usersJson.indexOf(user)+1} for: ${user.username || user.result}`, async ({ page }, testInfo) => {
       testInfo.annotations.push({type: 'user', description: user.username || user.result});
 
       await test.step('fill in the login form', async () => {
@@ -121,7 +128,7 @@ test.describe('data driven login tests', () => {
   }
 
   for (const user of usersCsv) {
-    test.skip(`from csv - login test ${usersCsv.indexOf(user)+1} for: ${user.username || user.result}`, async ({ page }, testInfo) => {
+    test(`from csv - login test ${usersCsv.indexOf(user)+1} for: ${user.username || user.result}`, async ({ page }, testInfo) => {
       testInfo.annotations.push({type: 'user', description: user.username || user.result});
 
       await test.step('fill in the login form', async () => {
