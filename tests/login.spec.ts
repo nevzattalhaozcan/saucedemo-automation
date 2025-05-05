@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from '../pages/LoginPage.ts';
-import usersJson from '../data/users.json';
+import usersJson from '../data/users.json' assert { type: 'json' };
 import { readCSVFile } from '../utils/helpers';
 import * as dotenv from 'dotenv';
 
@@ -8,7 +8,7 @@ dotenv.config();
 
 const username = String(process.env.USERNAME);
 const password = String(process.env.PASSWORD);
-const usersCsv = readCSVFile('../data/users.csv');
+const usersCsv = readCSVFile('./data/users.csv');
 
 test.describe('Login Tests', () => {
 
