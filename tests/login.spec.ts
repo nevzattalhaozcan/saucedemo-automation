@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from '@pages/LoginPage';
-import usersJson from '@data/users.json';
-import { readCSVFile } from '@utils/helpers';
+import { LoginPage } from '../pages/LoginPage.ts';
+import usersJson from '../data/users.json';
+import { readCSVFile } from '../utils/helpers';
 import * as dotenv from 'dotenv';
 
 dotenv.config();

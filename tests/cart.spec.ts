@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { ProductsPage } from "@pages/ProductsPage";
-import { CartPage } from "@pages/CartPage";
-import { LoginPage } from "@pages/LoginPage";
+import { ProductsPage } from "../pages/ProductsPage";
+import { CartPage } from "../pages/CartPage";
+import { LoginPage } from "../pages/LoginPage";
 import * as dotenv from 'dotenv';
 
 dotenv.config();
