@@ -1,4 +1,3 @@
-// Verify that all products load correctly on the Products page.
 import { test, expect } from "@playwright/test";
 import { ProductsPage } from "../pages/ProductsPage";
 import { LoginPage } from "../pages/LoginPage";

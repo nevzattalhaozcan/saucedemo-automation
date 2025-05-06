@@ -20,8 +20,6 @@ export class CartPage {
     const itemRoot = this.page.locator('[data-test="inventory-item"]').filter({
       has: this.page.getByTestId('inventory-item-name').filter({ hasText: new RegExp(`^${productName}$`, 'i') })
     });
-    // Optionally, assert only one match
-    // await expect(itemRoot).toHaveCount(1);
     return new CartItem(itemRoot);
   }
 
@@ -38,7 +36,7 @@ export class CartPage {
   }
 
   async getCartItemPrice(productName: string) {
-    return String(await this.getCartItem(productName).getPrice());
+    return Number(await this.getCartItem(productName).getPrice());
   }
 
   async getCartItemName(productName: string) {
@@ -46,7 +44,7 @@ export class CartPage {
   }
 
   async getCartItemQuantity(productName: string) {
-    return await this.getCartItem(productName).getQuantity();
+    return Number(await this.getCartItem(productName).getQuantity());
   }
 
   async isCartItemVisible(productName: string) {

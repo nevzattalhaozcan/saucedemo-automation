@@ -1,7 +1,7 @@
-import { Locator } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class CheckoutPage {
-  readonly page: Locator;
+  readonly page: Page;
   readonly firstNameInput: Locator;
   readonly lastNameInput: Locator;
   readonly postalCodeInput: Locator;
@@ -15,8 +15,9 @@ export class CheckoutPage {
   readonly completeHeader: Locator;
   readonly completeText: Locator;
   readonly backHomeButton: Locator;
+  readonly finishButton: Locator;
 
-  constructor(page: Locator) {
+  constructor(page: Page) {
     this.page = page;
     this.firstNameInput = page.getByTestId('firstName');
     this.lastNameInput = page.getByTestId('lastName');
@@ -31,6 +32,7 @@ export class CheckoutPage {
     this.completeHeader = page.getByTestId('complete-header');
     this.completeText = page.getByTestId('complete-text');
     this.backHomeButton = page.getByTestId('back-to-products');
+    this.finishButton = page.getByTestId('finish');
   }
 
   async fillCheckoutForm(firstName: string, lastName: string, postalCode: string) {
@@ -56,15 +58,24 @@ export class CheckoutPage {
   }
 
   async getItemTotal() {
-    return await this.itemTotal.textContent();
+    const itemTotalText = await this.itemTotal.textContent();
+    const itemTotalValue = itemTotalText?.match(/[\d.]+/);
+    const itemTotal = itemTotalValue ? Number(itemTotalValue[0]) : null;
+    return itemTotal;
   }
 
   async getTax() {
-    return await this.tax.textContent();
+    const taxText = await this.tax.textContent();
+    const taxValue = taxText?.match(/[\d.]+/);
+    const tax = taxValue ? Number(taxValue[0]) : null;
+    return tax;
   }
 
   async getTotal() {
-    return await this.total.textContent();
+    const totalText = await this.total.textContent();
+    const totalValue = totalText?.match(/[\d.]+/);
+    const total = totalValue ? Number(totalValue[0]) : null;
+    return total;
   }
 
   async getCompleteHeader() {
@@ -77,6 +88,10 @@ export class CheckoutPage {
 
   async clickBackHome() {
     await this.backHomeButton.click();
+  }
+
+  async clickFinish() {
+    await this.finishButton.click();
   }
 
 }

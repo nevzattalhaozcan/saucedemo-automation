@@ -1,6 +1,5 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from '../pages/LoginPage.ts';
-//import usersJson from '../data/users.json' assert { type: 'json' };
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from "url";
