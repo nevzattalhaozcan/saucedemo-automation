@@ -35,7 +35,7 @@ test.describe('Cart Tests', () => {
 
     expect(cartItemName).toBe(productName);
     expect(cartItemPrice).toBe(productPrice);
-    expect(cartItemQuantity).toBe('1');
+    expect(cartItemQuantity).toBe(1);
   });
 
   test('add multiple products to the cart and verify all items are listed', async ({ page }) => {
@@ -51,11 +51,11 @@ test.describe('Cart Tests', () => {
     for (const item of expectedItems) {
       const cartItemName = await cartPage.getCartItemName(item.name);
       const cartItemPrice = Number(await cartPage.getCartItemPrice(item.name));
-      const cartItemQuantity = await cartPage.getCartItemQuantity(item.name);
+      const cartItemQuantity = Number(await cartPage.getCartItemQuantity(item.name));
 
       expect(cartItemName).toBe(item.name);
       expect(cartItemPrice).toBe(item.price);
-      expect(cartItemQuantity).toBe('1');
+      expect(cartItemQuantity).toBe(1);
     }
   });
 
