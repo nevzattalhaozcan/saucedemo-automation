@@ -27,11 +27,11 @@ test.describe('Cart Tests', () => {
     const product = 'Sauce Labs Backpack';
     await productsPage.addProductToCart(product);
     const productName = await productsPage.getProductName(product);
-    const productPrice = await productsPage.getProductPrice(product) || '0.00';
+    const productPrice = Number(await productsPage.getProductPrice(product)) || 0.00;
     await productsPage.gotoCart();
     const cartItemName = await cartPage.getCartItemName(productName);
-    const cartItemPrice = await cartPage.getCartItemPrice(productName);
-    const cartItemQuantity = await cartPage.getCartItemQuantity(productName);
+    const cartItemPrice = Number(await cartPage.getCartItemPrice(productName));
+    const cartItemQuantity = Number(await cartPage.getCartItemQuantity(productName));
 
     expect(cartItemName).toBe(productName);
     expect(cartItemPrice).toBe(productPrice);
@@ -40,17 +40,17 @@ test.describe('Cart Tests', () => {
 
   test('add multiple products to the cart and verify all items are listed', async ({ page }) => {
     const products = ['Sauce Labs Backpack', 'Sauce Labs Bike Light'];
-    const expectedItems: { name: string; price: string }[] = [];
+    const expectedItems: { name: string; price: number }[] = [];
     for (const product of products) {
       await productsPage.addProductToCart(product);
       const productName = await productsPage.getProductName(product);
-      const productPrice = await productsPage.getProductPrice(product) || '0.00';
+      const productPrice = Number(await productsPage.getProductPrice(product)) || 0.00;
       expectedItems.push({ name: productName, price: productPrice });
     }
     await productsPage.gotoCart();
     for (const item of expectedItems) {
       const cartItemName = await cartPage.getCartItemName(item.name);
-      const cartItemPrice = await cartPage.getCartItemPrice(item.name);
+      const cartItemPrice = Number(await cartPage.getCartItemPrice(item.name));
       const cartItemQuantity = await cartPage.getCartItemQuantity(item.name);
 
       expect(cartItemName).toBe(item.name);
